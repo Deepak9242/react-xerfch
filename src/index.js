@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
-import {LoginControl} from "./App";
+import { MailControl } from "./App";
 
-
-ReactDOM.render(<LoginControl />, document.getElementById("footer"));
-
+//ReactDOM.render(<App />, document.getElementById("footer"));
+ReactDOM.render(<MailControl />, document.getElementById("third"));

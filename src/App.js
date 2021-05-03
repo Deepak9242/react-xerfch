@@ -10,62 +10,38 @@ export default function App() {
   );
 }
 
-export function User(props) {
-  return <h1> Welcome back {props.name}</h1>;
-}
-
-export function Guest(props) {
-  return <h1> Please Sign Up </h1>;
-}
-
-export function Greeting(props) {
-  const logg = props.log;
-  const nameex = props.name;
-  if (logg) {
-    return <User name={nameex} />;
+export function MailBox(props) {
+  const msg = props.number;
+  let body;
+  if (msg > 0) {
+    body = <h2> You have {msg} Unread message </h2>;
+  } else {
+    body = <h2> You have No Unread messages </h2>;
   }
-  return <Guest />;
+
+  return body;
 }
 
-export function LoginButton(props) {
-  return <button onClick={props.onClick}> Login </button>;
-}
-
-export function LogoutButton(props) {
-  return <button onClick={props.onClick}> Logout </button>;
-}
-
-export class LoginControl extends React.Component {
+export class MailControl extends React.Component {
   constructor(props) {
     super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
-      log: true
+      num: 0
     };
   }
 
-  handleLogin() {
-    this.setState({ log: true });
-  }
-
-  handleLogout() {
-    this.setState({ log: false });
+  handleClick() {
+    this.setState(state => ({
+      num: state.num + 1
+    }));
   }
 
   render() {
-    let logg = this.state.log;
-    let button;
-    if (logg) {
-      button = <LoginButton onClick={this.handleLogout} />;
-    } else {
-      button = <LogoutButton onClick={this.handleLogin} />;
-    }
-
     return (
       <div>
-        <Greeting log={this.state.log} name="deepak" />
-        {button}
+        <button onClick={this.handleClick}> Add </button>
+        <MailBox number={this.state.num} />
       </div>
     );
   }
