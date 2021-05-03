@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
+import {LoginControl} from "./App";
 
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<LoginControl />, document.getElementById("footer"));
 
