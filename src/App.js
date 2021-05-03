@@ -26,6 +26,7 @@ export class MailControl extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
+    this.handleBack = this.handleBack.bind(this);
     this.state = {
       num: 0
     };
@@ -37,10 +38,20 @@ export class MailControl extends React.Component {
     }));
   }
 
+  handleBack() {
+    if (this.state.num > 0) {
+      this.setState(state => ({
+        num: state.num - 1
+      }));
+    }
+  }
+
   render() {
     return (
       <div>
         <button onClick={this.handleClick}> Add </button>
+
+        <button onClick={this.handleBack}> Dec </button>
         <MailBox number={this.state.num} />
       </div>
     );
