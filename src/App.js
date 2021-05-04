@@ -12,13 +12,39 @@ export default function App() {
   );
 }
 
-export function List(props) {
-  const kl = [
-    { id: 1, name: "deepak sharma", content: "Welcome to the foundation" },
-    { id: 2, name: "Soni sharma", content: "Welcome to the Basement" }
-  ];
+export class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      value: "Deepak "
+    };
+  }
 
-  const mk = kl.map(st => <li key={st.id}>{st.content}</li>);
+  handleChange(event) {
+    this.setState(state => ({
+      value: event.target.value
+    }));
+  }
+  handleSubmit(event) {
+    alert("The Entry is---" + this.state.value);
+    event.preventDefault();
+  }
 
-  return <ul> {mk} </ul>;
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.value}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
 }
