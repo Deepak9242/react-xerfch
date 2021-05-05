@@ -12,82 +12,99 @@ export default function App() {
   );
 }
 
-export class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    const names = props.array;
-    const tags = names.map(n => <option value={n.toString()}>{n}</option>);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      value: "",
-      options: tags
-    };
-  }
-
-  handleChange(event) {
-    this.setState(state => ({
-      value: event.target.value
-    }));
-  }
-  handleSubmit(event) {
-    alert("The Entry is---" + this.state.value);
-    event.preventDefault();
-  }
-  componentDidUpdate() {
-    this.render();
-  }
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <select value={this.state.value} onChange={this.handleChange}>
-            {this.state.options}
-          </select>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
-
-
-
 export class FormControl extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      value: [],
-      temp: ""
+      list: []
     };
   }
-  handleChange(e) {
-    this.setState({
-      temp: e.target.value
-    });
-  }
-  handleSubmit(e) {
+
+  handleChange(value) {
     this.setState(state => ({
-      value: [...state.value, state.temp]
+      list: [...state.list, value]
     }));
-    this.props.
-    e.preventDefault();
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>Enter the value:</label>
-          <input type="text" onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
-        </form>
-        <Form array={this.props.array} />
-        <h1>{this.state.value}</h1>
+        <Form submit={this.handleChange} />
+        <Dropdown list={this.state.list} />
       </div>
     );
   }
+}
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleName = this.handleName.bind(this);
+    this.Clear = this.Clear.bind(this);
+    this.state = {
+      temp: "",
+      name: ""
+    };
+  }
+
+  handleName() {
+    this.setState(state => ({
+      name: state.temp
+    }));
+    setInterval(this.Clear, 2000);
+  }
+  Clear() {
+    this.setState({
+      name: ""
+    });
+  }
+
+  handleClick(e) {
+    this.props.submit(this.state.temp);
+    this.handleName();
+    e.preventDefault();
+  }
+
+  handleChange(e) {
+    this.setState({
+      temp: e.target.value
+    });
+  }
+
+  render() {
+    let body;
+    if (this.state.name != "") {
+      body = <h1>{this.state.name} added successfully </h1>;
+    } else {
+      body = null;
+    }
+
+    return (
+      <div>
+        <form onSubmit={this.handleClick}>
+          <label> Name: </label>
+          <input type="text" onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
+        {body}
+      </div>
+    );
+  }
+}
+
+function Dropdown(props) {
+  let body = null;
+  const li = props.list;
+  const mp = li.map(x => <option value={x.toString}>{x}</option>);
+
+  return (
+    <div>
+      <hr />
+      <select onChange={() => handleChange}>{mp}</select>
+      {body}
+    </div>
+  );
 }
