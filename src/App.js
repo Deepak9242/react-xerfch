@@ -52,7 +52,7 @@ export class Form extends React.Component {
   }
 }
 
-export let list_ab = [];
+
 
 export class FormControl extends React.Component {
   constructor(props) {
@@ -73,7 +73,7 @@ export class FormControl extends React.Component {
     this.setState(state => ({
       value: [...state.value, state.temp]
     }));
-    this.props.array = [...this.props.array, this.state.temp];
+    this.props.
     e.preventDefault();
   }
 
